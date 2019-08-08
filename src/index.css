@@ -1,5 +1,10 @@
+html{
+  font-size: 16px;
+}
+
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -7,7 +12,68 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+label {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 1.375rem;
+}
+
+legend {
+  position: relative;
+  z-index: 0; 
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  margin-bottom: 2.5rem;
+  font-family: 'Work Sans', sans-serif;
+}
+
+legend::before {
+  position: absolute;
+  content: '';
+  width: calc(120% );
+  display: block;
+  background-color:#EB6864;
+  height: 2.5rem;
+  z-index:-1;
+  left: -1.875rem;
+  right: -1.875rem;
+  transform: rotate(-1deg);
+  transition: transform .3s ease;
+}
+
+legend:hover::before{
+  transform: rotate(2deg);
+}
+
+form.card{
+  border: none;
+}
+
+.lyrics {
+  white-space: pre-wrap;
+}
+
+.card img {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+h2 {
+  margin-bottom: 2rem;
+  font-family: 'Work Sans', sans-serif;
+  border-bottom: 3px solid #EB6864;
+  padding-bottom:0.625rem;
+}
+.card-body i {
+  font-size: 3rem;
+  margin-right: 3rem;
+}
+
+.fa-facebook {
+  color: #3b5998;
+}
+.fa-twitter {
+  color: #0084b4;
+}
+.fa-lastfm {
+  color: #d51007;
 }
