@@ -6,12 +6,12 @@ import axios from 'axios';
 function App() {
 
   //state
-  const [ artist, setArtirst ] = useState();
+  const [ artist, setArtist ] = useState();
   const [ lyrics, setLyrics ] = useState([]);
   const [ info, setInfo ] = useState({});
 
 
-  //query to api
+  //query to lyrics api
   const getApiLyrics = async ({artist, song}) => {
     const url = `https://api.lyrics.ovh/v1/${artist}/${song}`;
 
@@ -20,7 +20,25 @@ function App() {
 
     //store response
     setLyrics(response.data.lyrics);
+    setArtist(artist);
   }
+
+  //query to info api
+  const getApiInfo = async () => {
+    const url = `https://theaudiodb.com/api/v1/json/1/search.php?s=${artist}`;
+
+    //query api
+    const response = await axios(url);
+    
+    //update state
+    setInfo(response.data.artist[0]);
+  }
+
+  useEffect(
+    () => {
+      getApiInfo();
+    }, [artist]
+  );
 
   return (
     <Fragment>
