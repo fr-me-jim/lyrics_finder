@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 
-const Form = ({getApiLyrics}) => {
+const Form = ({getAPILyrics}) => {
 
     //state
     const [ search, setSearch ] = useState({
@@ -21,7 +21,7 @@ const Form = ({getApiLyrics}) => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        getApiLyrics(search);
+        getAPILyrics(search);
     }
  
     return ( 
