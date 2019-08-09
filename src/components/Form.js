@@ -44,7 +44,6 @@ const Form = ({getAPILyrics}) => {
                                         name="artist" 
                                         placeholder="Artist's Name" 
                                         onChange={handleChange}
-                                        value={search.artist}
                                         required
                                     />
                                 </div>
@@ -58,7 +57,6 @@ const Form = ({getAPILyrics}) => {
                                         name="song" 
                                         placeholder="Song's Name" 
                                         onChange={handleChange}
-                                        value={search.song}
                                         required
                                     />
                                 </div>

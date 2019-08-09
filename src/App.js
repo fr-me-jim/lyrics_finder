@@ -2,6 +2,7 @@ import React, {useState, useEffect, Fragment} from 'react';
 import Form from './components/Form';
 import Song from './components/Song';
 import ArtistInfo from './components/ArtistInfo';
+import Error from './components/Error';
 import axios from 'axios';
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
   const [ artist, setArtist ] = useState('');
   const [ lyrics, setLyrics ] = useState([]);
   const [ info, setInfo ] = useState({});
-  const [ error, setError ] = useState(false);
+  const [ errorArtist, setErrorArtist ] = useState(false);
+  const [ errorLyrics, setErrorLyrics ] = useState(false);
 
 
   //query to lyrics api
@@ -21,30 +23,47 @@ function App() {
     setArtist(artist);
 
     //query api
-    const response = await axios(url);
+    try {
+      const response = await axios(url);
 
-    //store response
-    setLyrics(response.data.lyrics);
+      //store response
+      setLyrics(response.data.lyrics);
+      setErrorLyrics(false);
+
+    } catch (error) {
+      //if not found then set error
+      if(error.response.status === 404)
+        setErrorLyrics(true);
+    }
+
+    
     
   }
 
-  //query to info api
-  const getAPIInfo = async () => {
-    if(artist){
-      const url = `https://theaudiodb.com/api/v1/json/1/search.php?s=${artist}`;
-
-      //query api
-      const response = await axios(url);
-      console.log(response);
-      
-      //update state
-      setInfo(response.data.artists[0]);
-    }
-  }
 
   useEffect(
     () => {
+      //query to info api
+      const getAPIInfo = async () => {
+        if(artist){
+          const url = `https://theaudiodb.com/api/v1/json/1/search.php?s=${artist}`;
+
+          //query api
+          const response = await axios(url);
+          
+          //update state
+          if(response.data.artists === null) {
+            setErrorArtist(true);
+          }
+          else {
+            setInfo(response.data.artists[0]);
+            setErrorArtist(false);
+          }
+        }
+      }
+
       getAPIInfo();
+
     }, [artist]
   );
 
@@ -57,15 +76,25 @@ function App() {
       <div className="container mt-5">
         <div className="row">
           <div className="col-md-6">
-            <ArtistInfo 
-              info={info}
-            />
+            { errorArtist ? 
+              <Error 
+                message="We have no info about this artist!"
+              /> : 
+              <ArtistInfo 
+                info={info}
+              />
+            }
           </div>
 
           <div className="col-md-6">
-            <Song 
-              lyrics={lyrics}
-            />
+            { errorLyrics ?
+              <Error 
+                message="We have no lyrics for this song."
+              /> :
+              <Song 
+                lyrics={lyrics}
+              />
+            }
           </div>
         </div>
       </div>
